@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/about"
+        android:title="About this app"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/pp"
+        android:title="Privacy Policy"
+        tools:ignore="HardcodedText" />
+
+    <item
+        android:id="@+id/wallet"
+        android:title="Stake Address"
+        tools:ignore="HardcodedText" />
+
+    <item android:title="Notifications"
+        tools:ignore="HardcodedText">
+        <menu>
+            <item
+                android:id="@+id/notificationsON"
+                android:title="Turn on notifications" />
+            <item
+                android:id="@+id/notificationsOFF"
+                android:title="Turn off notifications" />
+        </menu>
+    </item>
+
+    <item android:title="Other cryptocurrencies"
+        tools:ignore="HardcodedText">
+        <menu>
+            <item
+                android:id="@+id/btc"
+                android:title="Bitcoin" />
+            <item
+                android:id="@+id/eth"
+                android:title="Ethereum" />
+            <item
+                android:id="@+id/bnb"
+                android:title="Binance Coin" />
+        </menu>
+    </item>
+</menu>
