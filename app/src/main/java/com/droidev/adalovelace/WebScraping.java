@@ -123,17 +123,41 @@ public class WebScraping {
     public String[] getAmountFromAddress(String address) {
 
         String amount;
+
+        Double temp;
+
         try {
 
             Document doc = Jsoup.connect("https://cexplorer.io/stake/" + address).get();
 
             Elements elements = doc.select("span[data-bs-toggle=tooltip]");
 
-            System.out.println(elements);
-
             Element element = elements.get(3);
 
             amount = element.text().replace(" ", "").replace("₳", "");
+
+            if (amount.contains("k")) {
+
+                amount = amount.replace("k", "");
+
+                temp = Double.parseDouble(amount) * 1000;
+
+                amount = String.valueOf(temp);
+            } else if (amount.contains("M")) {
+
+                amount = amount.replace("M", "");
+
+                temp = Double.parseDouble(amount) * 1000000;
+
+                amount = String.valueOf(temp);
+            } else if (amount.contains("B")) {
+
+                amount = amount.replace("B", "");
+
+                temp = Double.parseDouble(amount) * 1000000000;
+
+                amount = String.valueOf(temp);
+            }
 
             msg = "Success!";
 
