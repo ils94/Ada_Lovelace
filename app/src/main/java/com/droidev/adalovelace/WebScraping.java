@@ -8,6 +8,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebScraping {
 
@@ -124,40 +126,17 @@ public class WebScraping {
 
         String amount;
 
-        Double temp;
-
         try {
 
             Document doc = Jsoup.connect("https://cexplorer.io/stake/" + address).get();
 
-            Elements elements = doc.select("span[data-bs-toggle=tooltip]");
+            Elements elements = doc.select("#data > div > div > table > tbody > tr:nth-child(6) > td:nth-child(2) > div > span:nth-child(2)");
 
-            Element element = elements.get(3);
+            String[] clearElement;
 
-            amount = element.text().replace(" ", "").replace("₳", "");
+            clearElement = elements.get(0).toString().split("\"");
 
-            if (amount.contains("k")) {
-
-                amount = amount.replace("k", "");
-
-                temp = Double.parseDouble(amount) * 1000;
-
-                amount = String.valueOf(temp);
-            } else if (amount.contains("M")) {
-
-                amount = amount.replace("M", "");
-
-                temp = Double.parseDouble(amount) * 1000000;
-
-                amount = String.valueOf(temp);
-            } else if (amount.contains("B")) {
-
-                amount = amount.replace("B", "");
-
-                temp = Double.parseDouble(amount) * 1000000000;
-
-                amount = String.valueOf(temp);
-            }
+            amount = clearElement[3].replace(",", "");
 
             msg = "Success!";
 
