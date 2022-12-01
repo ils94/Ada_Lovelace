@@ -181,7 +181,7 @@ public class AlertDialogs {
                 .setMessage("The purpose of this small project is to track your ADA portfolio." +
                         "\n\nAll information is saved locally and is not collected. " +
                         "\n\nThis app uses Google Finance data to display prices." +
-                        "\n\nThis app uses cexplorer.io to fetch ADA amount from stake address" +
+                        "\n\nThis app uses cardanoscan.io to fetch ADA amount from stake address" +
                         "\n\nAll token logos are property of their owners.")
                 .setPositiveButton("Ok", null)
                 .show();

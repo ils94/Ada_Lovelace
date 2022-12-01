@@ -128,15 +128,14 @@ public class WebScraping {
 
         try {
 
-            Document doc = Jsoup.connect("https://cexplorer.io/stake/" + address).get();
+            Document doc = Jsoup.connect("https://cardanoscan.io/stakekey/" + address)
+                    .userAgent("Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.61 Mobile Safari/537.36")
+                    .referrer("http://www.google.com")
+                    .get();
 
-            Elements elements = doc.select("#data > div > div > table > tbody > tr:nth-child(6) > td:nth-child(2) > div > span:nth-child(2)");
+            Elements elements = doc.select("div[class=flex items-baseline font-mono]");
 
-            String[] clearElement;
-
-            clearElement = elements.get(0).toString().split("\"");
-
-            amount = clearElement[3].replace(",", "");
+            amount = elements.get(0).text();
 
             msg = "Success!";
 
