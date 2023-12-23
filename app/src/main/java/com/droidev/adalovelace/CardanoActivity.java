@@ -252,7 +252,7 @@ public class CardanoActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 alertDialogs.turnOnNotifications(CardanoActivity.this);
             } else {
-                Toast.makeText(this, "You must give this app permission to show notifications.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Allow notifications first", Toast.LENGTH_SHORT).show();
             }
         }
     }
