@@ -1,7 +1,10 @@
 package com.droidev.adalovelace;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,6 +71,7 @@ public class CardanoActivity extends AppCompatActivity {
         check.setOnClickListener(v -> updatePrice());
 
         gainLoss.setOnClickListener(v -> Toast.makeText(CardanoActivity.this, "Gain/Loss = Total - Last Total", Toast.LENGTH_LONG).show());
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,6 +91,7 @@ public class CardanoActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("NonConstantResourceId")
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -109,7 +118,13 @@ public class CardanoActivity extends AppCompatActivity {
 
             case R.id.notificationsON:
 
-                alertDialogs.turnOnNotifications(CardanoActivity.this);
+                String permission = Manifest.permission.POST_NOTIFICATIONS;
+                if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{permission}, 100);
+                } else {
+
+                    alertDialogs.turnOnNotifications(CardanoActivity.this);
+                }
 
                 break;
 
@@ -227,5 +242,18 @@ public class CardanoActivity extends AppCompatActivity {
 
         Intent myIntent = new Intent(CardanoActivity.this, BinanceActivity.class);
         CardanoActivity.this.startActivity(myIntent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                alertDialogs.turnOnNotifications(CardanoActivity.this);
+            } else {
+                Toast.makeText(this, "You must give this app permission to show notifications.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
